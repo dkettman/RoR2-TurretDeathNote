@@ -1,12 +1,6 @@
 using BepInEx;
-using IL;
-using R2API;
-using R2API.Utils;
 using RoR2;
-using UnityEngine;
-using UnityEngine.Networking;
 using HarmonyLib;
-
 
 // ReSharper disable UnusedMember.Global
 // ReSharper disable once InconsistentNaming
@@ -14,7 +8,6 @@ using HarmonyLib;
 namespace TurretDeathNote
 {
     [BepInDependency(R2API.R2API.PluginGUID)]
-//    [R2API.Utils.R2APISubmoduleDependency("NetworkingAPI")]
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
 
     public class TurretDeathNote : BaseUnityPlugin
@@ -22,13 +15,8 @@ namespace TurretDeathNote
         public const string PluginAuthor = "Watch_Me_Be_Meh";
         public const string PluginName = "TurretDeathNote";
         public const string PluginGUID = PluginAuthor + "." + PluginName;
-        public const string PluginVersion = "0.1.0";
-
-        // Taken from github.com/NotTsunami/ShowDeathCause mod
-        //private static DamageReport _damageReport;
-        //private static string _damageTaken;
-        //private static string _attacker;
-
+        public const string PluginVersion = "0.2.0";
+        
         public static string GetAttacker(DamageReport damageReport)
         {
             // Standard code path
@@ -54,7 +42,6 @@ namespace TurretDeathNote
                    && damageInfo.inflictor == null;
         }
 
-
         public void Awake()
         {
             var harmony = new Harmony(Info.Metadata.GUID);
@@ -75,10 +62,19 @@ namespace TurretDeathNote
                     }
                     else
                     {
-                        Chat.AddMessage(message: "Engineer's turret was killed by: " + GetAttacker(damageReport));
+                        if (GetAttacker(damageReport) != "???")
+                        {
+                            Chat.AddMessage(message: "Engineer's turret was killed by: " + GetAttacker(damageReport));
+                        }
+                        else
+                        {
+                            Chat.AddMessage(message: "damageReport.damageInfo.inflictor: " + damageReport.damageInfo.inflictor);
+                        }
                     }
                 }
             };
         }
+
     }
+
 }

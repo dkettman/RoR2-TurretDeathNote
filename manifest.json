@@ -1,6 +1,6 @@
 ﻿{
 	"name": "TurretDeathNote",
-	"version_number": "0.1.0",
+3	"version_number": "0.3.0",
 	"website_url": "https://github.com/dkettman/RoR2-TurretDeathNote",
 	"description": "Notifies players that your Engineer doesn't actually care for their turrets. (Shows in chat when a turret dies)",
 	"dependencies": [
